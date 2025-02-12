@@ -3,51 +3,50 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
-#To read the data from file
+# Read the data from file
 df = pd.read_csv("Churn_Data.csv")
+
+# Display first few rows
 print(df.head())
 
-#To get info of Data
+# Get info of Data
 print(df.info())
 
-#To replace blank values with 0
-df["TotalCharges"] = df["TotalCharges"].replace(" " , "0")
-df["TotalCharges"] = df["TotalCharges"].astype("float")
+# Replace blank values with 0 and convert to float
+df["TotalCharges"] = df["TotalCharges"].replace(" ", "0").astype(float)
 
-df.info()
+# Check info after conversion
+print(df.info())
 
-#To find total null values
+# Find total null values
 Number_Of_Null_Values = df.isnull().sum().sum()
-if(Number_Of_Null_Values != 0):
-    print(df.dropna())
+if Number_Of_Null_Values != 0:
+    df = df.dropna()
+    print(df.head())  # Display after dropping nulls
 else:
     print("No Null values present")
 
-#To get statistic info
+# Get statistical info
 print(df.describe())
 
-#To get sum of duplicates
-print(df.duplicated().sum())
-
+# Convert SeniorCitizen column to Yes/No
 def conv(value):
- if value == 1:
-    return "yes"
- else:
-     return "no"
+    return "yes" if value == 1 else "no"
+
 df["SeniorCitizen"] = df["SeniorCitizen"].apply(conv)
 print(df.head())
 
-#To get a graph of how many of them are churned out and how many of them not
-sns.countplot( x = 'Churn' , data = df)
+# Countplot of Churn column
+sns.countplot(x='Churn', data=df)
 plt.show()
 
-#To get in the form of piechart
-gb = df.groupby("Churn").agg({'Churn' : "count"})
-
-plt.pie(gb['Churn'] , labels = gb.index ,autopct = "%1.2f%%")
+# Pie chart for Churn distribution
+churn_counts = df["Churn"].value_counts()
+plt.pie(churn_counts, labels=churn_counts.index, autopct="%1.2f%%")
 plt.show()
 
+# Get sum of duplicates
+print(df.duplicated().sum())
 
 
 
