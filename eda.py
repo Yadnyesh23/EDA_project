@@ -11,7 +11,7 @@ print(df.head())
 #To get info of Data
 print(df.info())
 
-#To replace black values with 0
+#To replace blank values with 0
 df["TotalCharges"] = df["TotalCharges"].replace(" " , "0")
 df["TotalCharges"] = df["TotalCharges"].astype("float")
 
