@@ -14,6 +14,7 @@ print(df.head())
 print(df.info())
 
 # Replace blank values with 0 and convert to float
+df["TotalCharges"] = df["TotalCharges"].replace(" ", "0")
 df["TotalCharges"] = df["TotalCharges"].replace(" ", "0").astype(float)
 
 # Check info after conversion
